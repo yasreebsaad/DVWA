@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: DVWA-deployment
+  name: dvwa-deployment
 spec:
   replicas: 1  # Number of desired replicas
   selector:
     matchLabels:
-      app: DVWA
+      app: dvwa
   template:
     metadata:
       labels:
-        app: DVWA
+        app: dvwa
     spec:
       containers:
-      - name: DVWA
+      - name: dvwa
         image: yasreebakmal/dvwa:latest
         ports:
         - containerPort: 4280  # Port your application listens on
