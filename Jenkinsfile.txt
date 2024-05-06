@@ -61,9 +61,9 @@ pipeline{
             steps{
                 script{
                    withDockerRegistry(credentialsId: 'docker', toolName: 'docker'){
-                       sh "docker build -t myntra ."
-                       sh "docker tag myntra yasreebakmal/myntra:latest "
-                       sh "docker push yasreebakmal/myntra:latest"
+                       sh "docker build -t dvwa ."
+                       sh "docker tag dvwa yasreebakmal/dvwa:latest "
+                       sh "docker push yasreebakmal/dvwa:latest"
                     }
                 }
             }
@@ -72,9 +72,9 @@ pipeline{
             steps {
                 script{
                    withDockerRegistry(credentialsId: 'docker', toolName: 'docker'){
-                       sh 'docker-scout quickview yasreebakmal/myntra:latest'
-                       sh 'docker-scout cves yasreebakmal/myntra:latest'
-                       sh 'docker-scout recommendations yasreebakmal/myntra:latest'
+                       sh 'docker-scout quickview yasreebakmal/dvwa:latest'
+                       sh 'docker-scout cves yasreebakmal/dvwa:latest'
+                       sh 'docker-scout recommendations yasreebakmal/dvwa:latest'
                    }
                 }   
             }
@@ -83,11 +83,11 @@ pipeline{
             steps {
                 script{
                    withDockerRegistry(credentialsId: 'docker', toolName: 'docker'){
-                      // sh 'docker-scout quickview yasreebakmal/myntra:latest'
-                       //sh 'docker-scout cves yasreebakmal/myntra:latest'
-                       //sh 'docker-scout recommendations yasreebakmal/myntra:latest'
+                      // sh 'docker-scout quickview yasreebakmal/dvwa:latest'
+                       //sh 'docker-scout cves yasreebakmal/dvwa:latest'
+                       //sh 'docker-scout recommendations yasreebakmal/dvwa:latest'
                       
-                       sh 'trivy image yasreebakmal/myntra:latest > trivyfs.json'
+                       sh 'trivy image yasreebakmal/dvwa:latest > trivyfs.json'
                    }
                 }
                 
@@ -95,13 +95,13 @@ pipeline{
         }
         stage("Remove container"){
             steps{
-                sh "docker stop myntra | true"
-                sh "docker rm myntra | true"
+                sh "docker stop dvwa | true"
+                sh "docker rm dvwa | true"
             }
         }
         stage("deploy_docker"){
             steps{
-                sh "docker run -d --name myntra -p 3000:3000 yasreebakmal/myntra:latest"
+                sh "docker run -d --name dvwa -p 3000:3000 yasreebakmal/dvwa:latest"
             }
         }
         stage('Deploy to kubernets'){
