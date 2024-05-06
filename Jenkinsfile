@@ -22,8 +22,8 @@ pipeline{
         stage("Sonarqube Analysis "){
             steps{
                 withSonarQubeEnv('sonar-server') {
-                    sh ''' $SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=myntra \
-                    -Dsonar.projectKey=myntra'''
+                    sh ''' $SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=dvwa \
+                    -Dsonar.projectKey=dvwa'''
                 }
             }
         }
